@@ -51,7 +51,7 @@ useEffect (() => {
   <p>This is game container</p>
   <GameGrid  gridState={gridState}/>
   <div className="hand-container">
-  <HandList  card={card}/>
+  <HandList  cards={cards} />
   </div>
   </div>)
 }

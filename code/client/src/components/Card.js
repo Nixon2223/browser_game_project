@@ -1,9 +1,8 @@
 import React from 'react';
 
-function Card({row, col, card}) {
+function Card({ card}) {
   return <div className = "card">
-  <div id = {row.toString() + "-" + col.toString()}>
-  {row.toString() + "-" + col.toString()}
+  <div style={{backgroundImage: `url(${card.image_url})` }}>
 
   </div>
   </div>;
