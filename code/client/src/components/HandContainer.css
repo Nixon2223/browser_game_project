@@ -4,6 +4,8 @@
     border-radius: 7px;
     height : 100px;
     background-size : cover;
+    margin:5px ;
+    
 }
 #hand-list{
     padding: 10px;
@@ -25,4 +27,7 @@
 
 .hand-container{
     display: flex;
+    gap : 10px;
+
+    
 }
