@@ -14,6 +14,7 @@ function GameContainer() {
   const [clickToggle, setClickToggle] = useState(false)
   const [gameState, setGameState] = useState(false)
   const [playerHand, setPlayerHand] = useState([])
+  const [role, setRole]= useState([])
   const [deck, setDeck] = useState([])
 
   const [gridState, setGridState] = useState([
@@ -40,6 +41,7 @@ function GameContainer() {
     buildDeck();
     placeStartCards()
     }
+   
   }, [gameState])
 
   const buildDeck = () => {
@@ -111,6 +113,8 @@ function GameContainer() {
     }
   }
 
+  
+
 
 
 
@@ -129,7 +133,7 @@ function GameContainer() {
             <GameGrid  gridState={gridState}/>
             <button onClick={handleStartClick}>Start Game</button>     
             <div className="hand-container">
-            <HandList cards={playerHand} reorderHand = {reorderHand}/>
+            <HandList cards={playerHand} reorderHand = {reorderHand} />
              </div>
 
 

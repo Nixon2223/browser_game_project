@@ -10,6 +10,7 @@ function HandList({cards, reorderHand}) {
     })
   
   return (
+  
     <div className = "hand-container">
     <Droppable droppableId="cards" direction="horizontal">
       {(provided) => (
@@ -29,6 +30,9 @@ function HandList({cards, reorderHand}) {
     )}
     </Droppable>
   </div>
+ 
+  
+
   )
 }
 
