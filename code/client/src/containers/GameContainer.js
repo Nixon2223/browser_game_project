@@ -94,6 +94,11 @@ function GameContainer() {
     setPlayerHand(hand)
   }
 
+  const legalMove = (cardSelected, gridRow, gridCol) => {
+    if (Object.keys(gridState[gridRow][gridCol]).length !== 0) return console.log("Card already placed here!")
+    else return true
+  } 
+
 
   function handleOnDragEnd(result){
     console.log(result.destination)
@@ -112,17 +117,20 @@ function GameContainer() {
       return
     }
     else if (result.destination.droppableId.substring(0, 4) === "grid"){
+      const cardBeingPickedUp = playerHand[result.source.index]
       const row = result.destination.droppableId.substring(5,6)
       const col = result.destination.droppableId.substring(7)
-      const tempArr = gridState
-      tempArr[row].splice([col], 1, playerHand[result.source.index])
-      console.log(playerHand[result.source.index])
-      setGridState(tempArr)
-      //Discard from hand
-      const items = Array.from(playerHand)
-      items.splice(result.source.index, 1)
-      reorderHand(items) 
-      return
+      if (legalMove(cardBeingPickedUp, row, col) === true){
+        const tempArr = gridState
+        tempArr[row].splice([col], 1, playerHand[result.source.index])
+        console.log(playerHand[result.source.index])
+        setGridState(tempArr)
+        //Discard from hand
+        const items = Array.from(playerHand)
+        items.splice(result.source.index, 1)
+        reorderHand(items)
+      } 
+        return
     }
   }
 
