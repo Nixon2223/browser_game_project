@@ -101,7 +101,6 @@ function GameContainer() {
 
 
   function handleOnDragEnd(result){
-    console.log(result.destination)
     if (!result.destination) return
     else if (result.destination.droppableId === "discard"){
       const items = Array.from(playerHand)
@@ -123,7 +122,6 @@ function GameContainer() {
       if (legalMove(cardBeingPickedUp, row, col) === true){
         const tempArr = gridState
         tempArr[row].splice([col], 1, playerHand[result.source.index])
-        console.log(playerHand[result.source.index])
         setGridState(tempArr)
         //Discard from hand
         const items = Array.from(playerHand)
