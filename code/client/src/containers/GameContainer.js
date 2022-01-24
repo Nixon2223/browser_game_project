@@ -17,6 +17,7 @@ function GameContainer() {
   const [gameState, setGameState] = useState(false)
   const [playerHand, setPlayerHand] = useState([])
   const [deck, setDeck] = useState([])
+  const [room, setRoom] = useState([])
 
   const [gridState, setGridState] = useState([
       [ {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}],
@@ -27,6 +28,16 @@ function GameContainer() {
       [ {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}], 
       [ {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}]    
   ])
+
+  const joinRoom = (username) => {
+    if (username && room) {
+      let roomArray = []
+      roomArray.push(...room, username)
+      setRoom(roomArray)
+      socket.emit('join-room', room)
+    }
+  }
+
   const socket = io('http://localhost:5000')
 
   useEffect(()=>{
@@ -166,6 +177,7 @@ function GameContainer() {
     setDeck(deck)
   })
 
+
     return (
       <div className= "game-container">
 
@@ -173,7 +185,7 @@ function GameContainer() {
 
           <GameGrid  gridState={gridState}/>   
           <HandList cards={playerHand} reorderHand = {reorderHand} handleOnClickInvert = {handleOnClickInvert}/> 
-          <SideBar deck={deck} startClick={handleStartClick}/>
+          <SideBar deck={deck} startClick={handleStartClick} joinRoom={joinRoom}/>
 
         </DragDropContext>
         
