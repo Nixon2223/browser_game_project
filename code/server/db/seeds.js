@@ -204,20 +204,25 @@ db.game.insertOne({
         
 
         "gold_card": {
-            "image url": "https://ibb.co/xJbk1T3"
+            "front_url": "https://ibb.co/xJbk1T3",
+            "back_url" : "https://ibb.co/tpQ26BK"
         },
 
         "coal_card": {
-            "image url": "https://ibb.co/wzzxr87"
+            "front_url": "https://ibb.co/wzzxr87",
+            "back_url" : "https://ibb.co/tpQ26BK"
         },
         "nugget_one" : {
-            "image url": "https://ibb.co/8jm1gBr"
+            "front_url": "https://ibb.co/8jm1gBr",
+            "back_url": "https://ibb.co/64DYwS2"
         },
         "nugget_two" : {
-            "image url": "https://ibb.co/Qbdybtg"
+            "front_url": "https://ibb.co/Qbdybtg",
+            "back_url": "https://ibb.co/64DYwS2"
         },
         "nugget_three" : {
-            "image url": "https://ibb.co/8P7pdBH"
+            "front_url": "https://ibb.co/8P7pdBH",
+            "back_url": "https://ibb.co/64DYwS2"
         },
     },
 
