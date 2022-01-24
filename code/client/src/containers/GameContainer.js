@@ -27,9 +27,9 @@ function GameContainer() {
       [ {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}], 
       [ {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}]    
   ])
+  const socket = io('http://localhost:5000')
 
   useEffect(()=>{
-    const socket = io('http://localhost:5000')
     socket.on('connect', ()=>console.log(socket.id))
     socket.on('connect_error', ()=>{
       setTimeout(()=>socket.connect(),5000)
@@ -62,6 +62,7 @@ function GameContainer() {
     // Shuffle deck
     shuffleArray(deck);
     setDeck(deck)
+    socket.emit('update-deck', deck)
   }
 
   const shuffleArray = (array) => {
@@ -87,7 +88,10 @@ function GameContainer() {
     tempArr[3].splice(9, 1, startCardsArray[1])
     tempArr[5].splice(9, 1, startCardsArray[2])
     setGridState(tempArr)
+    socket.emit('update-grid-state', gridState)
   }
+
+
 
   const dealHand = () => {
     let tempArr = deck
@@ -153,6 +157,14 @@ function GameContainer() {
     setPlayerHand(tempArr)
     setClickToggle(!clickToggle);
   }
+
+  socket.on('receive-grid-state', gridState => {
+    setGridState(gridState)
+  })
+
+  socket.on('receive-deck', deck => {
+    setDeck(deck)
+  })
 
     return (
       <div className= "game-container">
