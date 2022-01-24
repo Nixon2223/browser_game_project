@@ -11,7 +11,7 @@ app.use(express.json());
 
 io.on('connection', socket => {
   console.log(socket.id)
-})
+});
 
 
 MongoClient.connect('mongodb://127.0.0.1:27017', { useUnifiedTopology: true })
