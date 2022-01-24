@@ -21,11 +21,15 @@ MongoClient.connect('mongodb://127.0.0.1:27017', { useUnifiedTopology: true })
   })
   .catch(console.err);
 
+
+
 server.listen(5000, function () {
   console.log(`Listening on port ${ this.address().port }`);
 }); 
 
-
 io.on('connection', socket => {
+  console.log(socket.socket.connected);
+  console.log(socket.socket.connecting);
   console.log(`You connected with: ${socket.id}`)
 });
+
