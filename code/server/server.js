@@ -9,6 +9,14 @@ const createRouter = require('./helpers/create_router');
 app.use(cors());
 app.use(express.json());
 
+// for chat box
+io.on ('connection', socket => {
+  socket.on('message',({name, message}) => {
+    io.emit('message', {name, message})
+  })
+})
+// 
+
 const io = new Server(server, {
   cors: {
     origin: "http://localhost:3000",

@@ -8,6 +8,7 @@ import { io } from 'socket.io-client'
 
 import {getData} from '../services/FetchService'
 import {handleOnDragEnd} from '../services/GameService'
+import ChatForm from '../components/ChatForm';
 
 function GameContainer() {
   
@@ -144,7 +145,14 @@ function GameContainer() {
     setClickToggle(!clickToggle);
   }
 
+  
+
     return (
+      <>
+      
+      <div className="chat-form">
+          <ChatForm />
+        </div>
       <div className= "game-container">
 
         <DragDropContext onDragEnd= {handleOnDragEnd}>
@@ -154,8 +162,9 @@ function GameContainer() {
           <SideBar deck={deck} startClick={handleStartClick}/>
 
         </DragDropContext>
-        
-      </div>
+        </div> 
+      
+        </>
     )
 }
 
