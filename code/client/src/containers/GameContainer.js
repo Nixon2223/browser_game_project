@@ -137,6 +137,7 @@ function GameContainer({playerNames, gameType, roomID}) {
     gridState[row][col- 1] !== undefined ? neighbours.push(Object.assign({}, gridState[row][col - 1])) : neighbours.push({})
     // [top, right, bottom, left]
     console.log(neighbours)
+    
      //connects open or closed (true or false)
     let neighboursEntries = []
 
