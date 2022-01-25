@@ -136,10 +136,27 @@ function GameContainer({playerNames, gameType, roomID}) {
     }
     gridState[row][col- 1] !== undefined ? neighbours.push(Object.assign({}, gridState[row][col - 1])) : neighbours.push({})
     // [top, right, bottom, left]
-    return neighbours
+    console.log(neighbours)
+     //connects open or closed (true or false)
+    let neighboursEntries = []
 
-    //connects open or closed (true or false)
+    if ( Object.keys(neighbours[0]).length !== 0 ){
+    neighbours[0].inverted ? neighboursEntries.push(neighbours[0].entries.top) : neighboursEntries.push(neighbours[0].entries.bottom)
+    }else{neighboursEntries.push(true)}
 
+    if (Object.keys(neighbours[1]).length !== 0 ){
+    neighbours[1].inverted ? neighboursEntries.push(neighbours[1].entries.right) : neighboursEntries.push(neighbours[1].entries.left)
+    }else{neighboursEntries.push(true)}
+
+    if (Object.keys(neighbours[2]).length !== 0 ){
+    neighbours[2].inverted ? neighboursEntries.push(neighbours[2].entries.bottom) : neighboursEntries.push(neighbours[2].entries.top)
+    }else{neighboursEntries.push(true)}
+
+    if (Object.keys(neighbours[3]).length !== 0 ){
+    neighbours[3].inverted ? neighboursEntries.push(neighbours[3].entries.left) : neighboursEntries.push(neighbours[3].entries.right)
+    }else{neighboursEntries.push(true)}
+
+ return neighboursEntries
 
     }
   
@@ -147,10 +164,8 @@ function GameContainer({playerNames, gameType, roomID}) {
       //check if card is already placed in grid location
       if (Object.keys(gridState[gridRow][gridCol]).length !== 0) return console.log("Card already placed here!")
       //check if grid position makes a connect with tile card
-
-
-
-      return console.log(gridNeighbours(gridRow, gridCol))
+      console.log(gridNeighbours(gridRow, gridCol))
+      return true
     } 
 
   function handleOnDragEnd(result){
