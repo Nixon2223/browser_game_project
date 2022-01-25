@@ -97,7 +97,7 @@ function GameContainer({playerNames, gameType, roomID}) {
 
   const shuffleArray = (array) => {
     let currentIndex = array.length,  randomIndex
-    while (currentIndex != 0) {
+    while (currentIndex !== 0) {
       randomIndex = Math.floor(Math.random() * currentIndex);
       currentIndex--;
       [array[currentIndex], array[randomIndex]] = [
@@ -143,9 +143,89 @@ function GameContainer({playerNames, gameType, roomID}) {
     setPlayerHand(hand)
   }
 
+  const gridNeighbours = (row, col) => {
+    let neighbours = []
+    row = Number(row)
+    col = Number(col)
+    if (gridState[row - 1] !== undefined) {
+      gridState[row - 1][col] !== undefined ? neighbours.push(Object.assign({}, gridState[row - 1][col])) : neighbours.push({})
+    } else {
+      neighbours.push({})
+    }
+    gridState[row][col + 1] !== undefined ? neighbours.push(Object.assign({}, gridState[row][col + 1])) : neighbours.push({})
+    if (gridState[row + 1] !== undefined) {
+      gridState[row + 1][col] !== undefined ? neighbours.push(Object.assign({}, gridState[row + 1][col])) : neighbours.push({})
+    } else {
+      neighbours.push({})
+    }
+    gridState[row][col- 1] !== undefined ? neighbours.push(Object.assign({}, gridState[row][col - 1])) : neighbours.push({})
+    // [top, right, bottom, left]
+    // console.log(neighbours)
+    return neighbours
+  }
+
+
+  const neighboursEntries = (neighbours) => {
+     //connects open or closed (true or false)
+    let neighboursEntries = []
+    // console.log(neighbours[0])
+    // console.log(neighbours[1])
+    // console.log(neighbours[2])
+    // console.log(neighbours[3])
+    if (Object.keys(neighbours[0]).length !== 0){
+    neighbours[0].inverted ? neighboursEntries.push(neighbours[0].entries.top) : neighboursEntries.push(neighbours[0].entries.bottom)
+    }else{neighboursEntries.push(null)}
+
+    if (Object.keys(neighbours[1]).length !== 0){
+    neighbours[1].inverted ? neighboursEntries.push(neighbours[1].entries.right) : neighboursEntries.push(neighbours[1].entries.left)
+    }else{neighboursEntries.push(null)}
+
+    if (Object.keys(neighbours[2]).length !== 0){
+    neighbours[2].inverted ? neighboursEntries.push(neighbours[2].entries.bottom) : neighboursEntries.push(neighbours[2].entries.top)
+    }else{neighboursEntries.push(null)}
+
+    if (Object.keys(neighbours[3]).length !== 0){
+    neighbours[3].inverted ? neighboursEntries.push(neighbours[3].entries.left) : neighboursEntries.push(neighbours[3].entries.right)
+    }else{neighboursEntries.push(null)}
+
+    // [top, right, bottom, left]
+    // null for empty or boarder tiles
+    // console.log(neighboursEntries)
+    return neighboursEntries
+  }
+
+  // helper function for comparing arrays
+  function arrayEquals(a, b) {
+    return Array.isArray(a) &&
+        Array.isArray(b) &&
+        a.length === b.length &&
+        a.every((val, index) => val === b[index]);
+}
+
+  const cardFitsNeighbours = (card, neighbours) => {
+    const cardEntries = [card.entries.top, card.entries.right, card.entries.bottom, card.entries.left ]
+    let resultNeighboursEntries = neighboursEntries(neighbours)
+
+    
+    console.log(resultNeighboursEntries)
+    console.log(cardEntries)
+
+    for (result in resultNeighboursEntries, index) {
+      if result === null
+    }
+
+    console.log(arrayEquals(cardEntries, resultNeighboursEntries))
+
+
+    return (arrayEquals(cardEntries, resultNeighboursEntries))
+  } 
+
   const legalMove = (cardSelected, gridRow, gridCol) => {
+    //check if card is already placed in grid location
     if (Object.keys(gridState[gridRow][gridCol]).length !== 0) return console.log("Card already placed here!")
-    else return true
+    //check if card fits in grid position with neighbours
+    else if (cardFitsNeighbours(cardSelected, gridNeighbours(gridRow, gridCol))) return true
+    else return false
   } 
 
   function handleOnDragEnd(result){
