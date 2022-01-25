@@ -10,7 +10,7 @@ function Card({card, index, handleOnClickInvert}) {
 
 
   return (
-    <Draggable key={index} draggableId={`${index}`} index={index}>
+    <Draggable key={index} draggableId={`${index}`} index={index} >
     {(provided) => (
       <div id='card-wrapper'>
           <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
