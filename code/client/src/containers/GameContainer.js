@@ -124,36 +124,33 @@ function GameContainer({playerNames, gameType, roomID}) {
     row = Number(row)
     col = Number(col)
     if (gridState[row - 1] !== undefined) {
-      gridState[row - 1][col] !== undefined ? neighbours.push(gridState[row - 1][col]) : neighbours.push({})
+      gridState[row - 1][col] !== undefined ? neighbours.push(Object.assign({}, gridState[row - 1][col])) : neighbours.push({})
     } else {
       neighbours.push({})
     }
-    gridState[row][col + 1] !== undefined ? neighbours.push(gridState[row][col + 1]) : neighbours.push({})
+    gridState[row][col + 1] !== undefined ? neighbours.push(Object.assign({}, gridState[row][col + 1])) : neighbours.push({})
     if (gridState[row + 1] !== undefined) {
-      gridState[row + 1][col] !== undefined ? neighbours.push(gridState[row + 1][col]) : neighbours.push({})
+      gridState[row + 1][col] !== undefined ? neighbours.push(Object.assign({}, gridState[row + 1][col])) : neighbours.push({})
     } else {
       neighbours.push({})
     }
-    gridState[row][col- 1] !== undefined ? neighbours.push(gridState[row][col - 1]) : neighbours.push({})
+    gridState[row][col- 1] !== undefined ? neighbours.push(Object.assign({}, gridState[row][col - 1])) : neighbours.push({})
     // [top, right, bottom, left]
     return neighbours
+
+    //connects open or closed (true or false)
+
+
     }
   
     const legalMove = (cardSelected, gridRow, gridCol) => {
+      //check if card is already placed in grid location
       if (Object.keys(gridState[gridRow][gridCol]).length !== 0) return console.log("Card already placed here!")
+      //check if grid position makes a connect with tile card
+
+
+
       return console.log(gridNeighbours(gridRow, gridCol))
-      // else if ({
-      //   const neighbours = gridNeighbours(gridRow, gridCol)
-      //  for (let i = 0; i < neighbours(gridRow, gridCol).length; i++) {
-      //     if (neighbours(gridRow, gridCol)[i] <= 0) {
-      //         result = false;
-      //         break;
-      // }){return false}
-  
-  
-  
-  
-      // else return true
     } 
 
   function handleOnDragEnd(result){
