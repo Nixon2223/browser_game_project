@@ -115,7 +115,7 @@ function GameContainer({playerNames, gameType, roomID}) {
     startCardsArray.push(Object.assign({}, data.cards.coal_card))
     startCardsArray.push(Object.assign({}, data.cards.coal_card))
     shuffleArray(startCardsArray)
-    tempArr[3].splice(1, 1, data.cards.tile_cards[7])
+    tempArr[3].splice(1, 1, Object.assign({}, data.cards["start-card"]))
     tempArr[1].splice(9, 1, startCardsArray[0])
     tempArr[3].splice(9, 1, startCardsArray[1])
     tempArr[5].splice(9, 1, startCardsArray[2])
@@ -234,7 +234,7 @@ function GameContainer({playerNames, gameType, roomID}) {
       console.log(gridNeighbours(gridRow, gridCol))
       if (Object.keys(neighbour).length !== 0){
         console.log(neighbour)
-        if (neighbour["name:"].substring(0, 4) === "path" || neighbour["name:"].substring(0, 5) === "start") return true
+        if (neighbour["name"].substring(0, 4) === "path" || neighbour["name"].substring(0, 5) === "start") return true
       }
     }
     return false
