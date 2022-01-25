@@ -27,7 +27,21 @@ MongoClient.connect('mongodb://127.0.0.1:27017', { useUnifiedTopology: true })
 
 io.on('connection', socket => {
   console.log(`You connected with: ${socket.id}`)
+
+  socket.on('update-grid-state', gridState => {
+    io.emit('receive-grid-state', gridState)
+  })
+
+  socket.on('update-deck', deck => {
+    io.emit('receive-deck', deck)
+  })
+
+  socket.on('join-room', room => {
+    io.join(room)
+    console.log(`User with ID: ${socket.id} joined room: ${room}`);
+  })
 });
+
 
 server.listen(5000, function () {
   console.log(`Listening on port ${ this.address().port }`);

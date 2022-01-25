@@ -28,8 +28,19 @@ function GameContainer({playerNames, gameType, roomID}) {
       [ {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}]    
   ])
 
+  // const joinRoom = (username) => {
+  //   if (username && room) {
+  //     let roomArray = []
+  //     roomArray.push(...room, username)
+  //     setRoom(roomArray)
+  //     socket.emit('join-room', room)
+  //   }
+  // }
+
+  const socket = io('http://localhost:5000')
+
+
   useEffect(()=>{
-    const socket = io('http://localhost:5000')
     socket.on('connect', ()=>console.log(socket.id))
     socket.on('connect_error', ()=>{
       setTimeout(()=>socket.connect(),5000)
@@ -74,6 +85,7 @@ function GameContainer({playerNames, gameType, roomID}) {
         deck[randomIndex], deck[currentIndex]];
     }
     setDeck(deck)
+    socket.emit('update-deck', deck)
   }
 
   const placeStartCards = () => {
@@ -83,6 +95,8 @@ function GameContainer({playerNames, gameType, roomID}) {
     tempArr[3].splice(9, 1, data.cards.tile_cards[7])
     tempArr[5].splice(9, 1, data.cards.tile_cards[7])
     setGridState(tempArr)
+    socket.emit('update-grid-state', gridState)
+
   }
 
   const dealHand = () => {
@@ -137,6 +151,7 @@ function GameContainer({playerNames, gameType, roomID}) {
         items.splice(result.source.index, 1)
         reorderHand(items)
       } 
+        socket.emit('update-grid-state', gridState)
         return
     }
   }
@@ -149,6 +164,14 @@ function GameContainer({playerNames, gameType, roomID}) {
     setPlayerHand(tempArr)
     setClickToggle(!clickToggle);
   }
+
+  socket.on('receive-grid-state', gridState => {
+    setGridState(gridState)
+  })
+
+  socket.on('receive-deck', deck => {
+    setDeck(deck)
+  })
 
   
   return (
