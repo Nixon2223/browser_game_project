@@ -203,6 +203,7 @@ function GameContainer({playerNames, gameType, roomID}) {
 }
 
   const cardFitsNeighbours = (card, neighbours) => {
+    // if (card.inverted === 
     const cardEntries = [card.entries.top, card.entries.right, card.entries.bottom, card.entries.left ]
     let resultNeighboursEntries = neighboursEntries(neighbours)
 
@@ -210,20 +211,36 @@ function GameContainer({playerNames, gameType, roomID}) {
     console.log(resultNeighboursEntries)
     console.log(cardEntries)
 
-    for (result in resultNeighboursEntries, index) {
-      if result === null
+    let results = []
+    let i = 0
+    for (let result of resultNeighboursEntries) {
+      (result === null) ? results.push(true) : results.push(result === cardEntries[i])
+      i += 1
     }
+    console.log(results)
 
-    console.log(arrayEquals(cardEntries, resultNeighboursEntries))
+    // console.log(arrayEquals(cardEntries, resultNeighboursEntries))
 
 
-    return (arrayEquals(cardEntries, resultNeighboursEntries))
+    return !results.includes(false)
   } 
 
+  const boarderTileCard = (gridRow, gridCol) => {
+    for (let neighbour of gridNeighbours(gridRow, gridCol)){
+      console.log(gridNeighbours(gridRow, gridCol))
+      if (Object.keys(neighbour).length !== 0){
+        if (neighbour["name:"].substring(0, 4) === "path" || neighbour["name:"].substring(0, 5) === "start") return true
+      }
+    }
+    return false
+  }
+
   const legalMove = (cardSelected, gridRow, gridCol) => {
-    //check if card is already placed in grid location
+    // check that card being placed boarders a tile card
+    if (!boarderTileCard(gridRow, gridCol)) return console.log("Cant be placed here!")
+    // check if card is already placed in grid location
     if (Object.keys(gridState[gridRow][gridCol]).length !== 0) return console.log("Card already placed here!")
-    //check if card fits in grid position with neighbours
+    // check if card fits in grid position with neighbours
     else if (cardFitsNeighbours(cardSelected, gridNeighbours(gridRow, gridCol))) return true
     else return false
   } 
