@@ -83,11 +83,21 @@ function GameContainer({playerNames, gameType, roomID}) {
 
   const buildDeck = () => {
     const deck = []
-    const cardData = Object.values(data.cards.tile_cards)
+    const tile_cardData = Object.values(data.cards.tile_cards)
     // Might need to custimise this to reflect true numbers of individual cards!
+    // 5x each tile card
     for (let step = 0; step < 5; step++){ 
-      for (let card of cardData)
+      for (let card of tile_cardData)
         deck.push(Object.assign({}, card))
+    }
+    const blockerCardData = Object.values(data.cards["blocker-cards"])
+    // 1x each blocker
+    for (let card of blockerCardData){
+      deck.push(Object.assign({}, card))
+    }
+    //randomize inverted
+    for (let card of deck){
+      card.inverted = Boolean(Math.round(Math.random()))
     }
     // Shuffle deck
     shuffleArray(deck);
