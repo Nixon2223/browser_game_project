@@ -98,10 +98,27 @@ function GameContainer() {
     setPlayerHand(hand)
   }
 
+  gridNeighbours = (row, col) => {
+  let neighbours = []
+  neighbours.push(gridState[col][row + 1])
+  neighbours.push(gridState[col + 1][row])
+  neighbours.push(gridState[col - 1][row])
+  neighbours.push(gridState[col][row - 1])
+  return neighbours
+  }
+
   const legalMove = (cardSelected, gridRow, gridCol) => {
     if (Object.keys(gridState[gridRow][gridCol]).length !== 0) return console.log("Card already placed here!")
+    else if ({
+      const neighbours = gridNeighbours(gridRow, gridCol)
+     for (let i = 0; i < neighbours(gridRow, gridCol).length; i++) {
+        if (neighbours(gridRow, gridCol)[i] <= 0) {
+            result = false;
+            break;
+    }){return false}
     else return true
   } 
+  }
 
   function handleOnDragEnd(result){
     if (!result.destination) return
