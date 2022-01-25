@@ -119,10 +119,42 @@ function GameContainer({playerNames, gameType, roomID}) {
     setPlayerHand(hand)
   }
 
-  const legalMove = (cardSelected, gridRow, gridCol) => {
-    if (Object.keys(gridState[gridRow][gridCol]).length !== 0) return console.log("Card already placed here!")
-    else return true
-  } 
+  const gridNeighbours = (row, col) => {
+    let neighbours = []
+    row = Number(row)
+    col = Number(col)
+    if (gridState[row - 1] !== undefined) {
+      gridState[row - 1][col] !== undefined ? neighbours.push(gridState[row - 1][col]) : neighbours.push(null)
+    } else {
+      neighbours.push(null)
+    }
+    gridState[row][col + 1] !== undefined ? neighbours.push(gridState[row][col + 1]) : neighbours.push(null)
+    if (gridState[row + 1] !== undefined) {
+      gridState[row + 1][col] !== undefined ? neighbours.push(gridState[row + 1][col]) : neighbours.push(null)
+    } else {
+      neighbours.push(null)
+    }
+    gridState[row][col- 1] !== undefined ? neighbours.push(gridState[row][col - 1]) : neighbours.push(null)
+    // [top, right, bottom, left]
+    return neighbours
+    }
+  
+    const legalMove = (cardSelected, gridRow, gridCol) => {
+      if (Object.keys(gridState[gridRow][gridCol]).length !== 0) return console.log("Card already placed here!")
+      return console.log(gridNeighbours(gridRow, gridCol))
+      // else if ({
+      //   const neighbours = gridNeighbours(gridRow, gridCol)
+      //  for (let i = 0; i < neighbours(gridRow, gridCol).length; i++) {
+      //     if (neighbours(gridRow, gridCol)[i] <= 0) {
+      //         result = false;
+      //         break;
+      // }){return false}
+  
+  
+  
+  
+      // else return true
+    } 
 
   function handleOnDragEnd(result){
     if (!result.destination) return
