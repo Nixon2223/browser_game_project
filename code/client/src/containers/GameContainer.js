@@ -16,6 +16,7 @@ function GameContainer({playerNames, gameType, roomID}) {
   const [gameState, setGameState] = useState(false)
   const [playerHand, setPlayerHand] = useState([])
   const [deck, setDeck] = useState([])
+  const [room, setRoom] = useState([])
   const [players, setPlayers] = useState([])
 
   const [gridState, setGridState] = useState([
@@ -40,6 +41,19 @@ function GameContainer({playerNames, gameType, roomID}) {
   const socket = io('http://localhost:5000')
 
 
+=======
+  const joinRoom = (username) => {
+    if (username && room) {
+      let roomArray = []
+      roomArray.push(...room, username)
+      setRoom(roomArray)
+      socket.emit('join-room', room)
+    }
+  }
+
+  const socket = io('http://localhost:5000')
+
+>>>>>>> cd93160da357e2c82605ca624471dd00599d7525
   useEffect(()=>{
     socket.on('connect', ()=>console.log(socket.id))
     socket.on('connect_error', ()=>{
@@ -77,27 +91,40 @@ function GameContainer({playerNames, gameType, roomID}) {
         deck.push(Object.assign({}, card))
     }
     // Shuffle deck
-    let currentIndex = deck.length,  randomIndex
-    while (currentIndex != 0) {
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex--;
-      [deck[currentIndex], deck[randomIndex]] = [
-        deck[randomIndex], deck[currentIndex]];
-    }
+    shuffleArray(deck);
     setDeck(deck)
     socket.emit('update-deck', deck)
   }
 
+  const shuffleArray = (array) => {
+    let currentIndex = array.length,  randomIndex
+    while (currentIndex != 0) {
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex], array[currentIndex]];
+    }
+    setDeck(deck)
+    socket.emit('update-deck', deck)
+    return array
+  }
+  
   const placeStartCards = () => {
     const tempArr = gridState
-    tempArr[3].splice(2, 1, data.cards.tile_cards[7])
-    tempArr[1].splice(9, 1, data.cards.tile_cards[7])
-    tempArr[3].splice(9, 1, data.cards.tile_cards[7])
-    tempArr[5].splice(9, 1, data.cards.tile_cards[7])
+    let startCardsArray = []
+    startCardsArray.push(Object.assign({}, data.cards.gold_card))
+    startCardsArray.push(Object.assign({}, data.cards.coal_card))
+    startCardsArray.push(Object.assign({}, data.cards.coal_card))
+    shuffleArray(startCardsArray)
+    tempArr[3].splice(1, 1, data.cards.tile_cards[7])
+    tempArr[1].splice(9, 1, startCardsArray[0])
+    tempArr[3].splice(9, 1, startCardsArray[1])
+    tempArr[5].splice(9, 1, startCardsArray[2])
     setGridState(tempArr)
     socket.emit('update-grid-state', gridState)
-
   }
+
+
 
   const dealHand = () => {
     let tempArr = deck
@@ -172,13 +199,15 @@ function GameContainer({playerNames, gameType, roomID}) {
   socket.on('receive-deck', deck => {
     setDeck(deck)
   })
-
   
   return (
     <div className= "game-container">
 
       <DragDropContext onDragEnd= {handleOnDragEnd}>
 
+          <GameGrid  gridState={gridState}/>   
+          <HandList cards={playerHand} reorderHand = {reorderHand} handleOnClickInvert = {handleOnClickInvert}/> 
+          <SideBar deck={deck} startClick={handleStartClick} joinRoom={joinRoom}/>
         <GameGrid  gridState={gridState}/>   
         <HandList cards={playerHand} reorderHand = {reorderHand} handleOnClickInvert = {handleOnClickInvert}/> 
         <SideBar deck={deck} startClick={handleStartClick} players={players}/>

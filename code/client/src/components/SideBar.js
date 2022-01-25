@@ -7,7 +7,7 @@ const SideBar = ({deck, startClick, players}) => {
     const playerNodes = players.map((player, index) => {
         return <Player playerName={player.name} score={player.score} key={index}/>
     })
-
+    
     const handleClick = () => {
         startClick();
     }
