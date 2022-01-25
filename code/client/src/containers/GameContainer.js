@@ -98,27 +98,35 @@ function GameContainer() {
     setPlayerHand(hand)
   }
 
-  gridNeighbours = (row, col) => {
+
+  const gridNeighbours = (row, col) => {
   let neighbours = []
-  neighbours.push(gridState[col][row + 1])
-  neighbours.push(gridState[col + 1][row])
-  neighbours.push(gridState[col - 1][row])
-  neighbours.push(gridState[col][row - 1])
+  row = Number(row)
+  col = Number(col)
+  gridState[row + 1][col] !== undefined ? neighbours.push(gridState[row + 1][col]) : neighbours.push(null)
+  gridState[row][col + 1] !== undefined ? neighbours.push(gridState[row][col + 1]) : neighbours.push(null)
+  gridState[row - 1][col] !== undefined ? neighbours.push(gridState[row - 1][col]) : neighbours.push(null)
+  gridState[row][col- 1] !== undefined ? neighbours.push(gridState[row][col - 1]) : neighbours.push(null)
+  // [top, right, bottom, left]
   return neighbours
   }
 
   const legalMove = (cardSelected, gridRow, gridCol) => {
     if (Object.keys(gridState[gridRow][gridCol]).length !== 0) return console.log("Card already placed here!")
-    else if ({
-      const neighbours = gridNeighbours(gridRow, gridCol)
-     for (let i = 0; i < neighbours(gridRow, gridCol).length; i++) {
-        if (neighbours(gridRow, gridCol)[i] <= 0) {
-            result = false;
-            break;
-    }){return false}
-    else return true
+    return console.log(gridNeighbours(gridRow, gridCol))
+    // else if ({
+    //   const neighbours = gridNeighbours(gridRow, gridCol)
+    //  for (let i = 0; i < neighbours(gridRow, gridCol).length; i++) {
+    //     if (neighbours(gridRow, gridCol)[i] <= 0) {
+    //         result = false;
+    //         break;
+    // }){return false}
+
+
+
+
+    // else return true
   } 
-  }
 
   function handleOnDragEnd(result){
     if (!result.destination) return
