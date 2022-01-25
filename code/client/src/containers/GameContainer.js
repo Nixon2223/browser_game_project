@@ -240,9 +240,30 @@ function GameContainer({playerNames, gameType, roomID}) {
     return false
   }
 
+  const checkIfMakesPath = (card, neighbours) => {
+    let resultNeighboursEntries = neighboursEntries(neighbours)
+    let cardEntries = []
+    if (card.inverted){
+      cardEntries = [card.entries.bottom, card.entries.left, card.entries.top, card.entries.right]
+    } else {
+      cardEntries = [card.entries.top, card.entries.right, card.entries.bottom, card.entries.left ]
+    }
+
+    let results = []
+    let i = 0
+    for (let result of resultNeighboursEntries) {
+      (result === true && cardEntries[i] === true ) ? results.push(true) : results.push(false)
+      i += 1
+    }
+    console.log(results)
+    return results.includes(true)
+  }
+
   const legalMove = (cardSelected, gridRow, gridCol) => {
     // check that card being placed boarders a tile card
     if (!boarderTileCard(gridRow, gridCol)) return console.log("Cant be placed here!")
+    // check if card makes path with at least one bordering card
+    if (!checkIfMakesPath(cardSelected, gridNeighbours(gridRow, gridCol))) return console.log("Cant be placed here!")
     // check if card is already placed in grid location
     if (Object.keys(gridState[gridRow][gridCol]).length !== 0) return console.log("Card already placed here!")
     // check if card fits in grid position with neighbours
