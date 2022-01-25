@@ -1,40 +1,42 @@
 import React, { useState, useEffect, useRef } from 'react';
-import io from "socket.io-client"
+import { io } from 'socket.io-client'
 
-function ChatForm() {
+
+
+function ChatForm({socket}) {
 
 const [state, setState] = useState({message: "", name: ""})
 const [chat, setChat] = useState ([])
 
-const socketRef = useRef()
 
-	useEffect(
-		() => {
-			socketRef.current = io.connect("http://localhost:3000")
-			socketRef.current.on("message", ({ name, message }) => {
-				setChat([ ...chat, { name, message } ])
-			})
-			return () => socketRef.current.disconnect()
-		},
-		[ chat ]
-	)
 
+  socket.on("message", ({ name, message }) => {
+    setChat([...chat, {name, message}])
+    
+})
+  socket.on('recieve-message', ({name, message}) => {
+    setChat([...chat, {name, message}])
+  })
+
+  
 	const onTextChange = (e) => {
 		setState({ ...state, [e.target.name]: e.target.value })
 	}
 
 	const onMessageSubmit = (e) => {
 		const { name, message } = state
-		socketRef.current.emit("message", { name, message })
+		socket.emit("message", { name, message })
 		e.preventDefault()
 		setState({ message, name })
+
 	}
 
     const renderChat = () => {
 		return chat.map(({ name, message }, index) => (
 			<div key={index}>
 				<h3>
-					{name}: <span>{message}</span>
+					{name}<br/>
+                    {message}
 				</h3>
 			</div>
 		))
@@ -42,26 +44,27 @@ const socketRef = useRef()
         }
 
   return (
-    <div className="card">
+    <div className="chat-box">
     <form onSubmit={onMessageSubmit}>
-        <h1>Messenger</h1>
+        {/* <h1>Messenger</h1> */}
         <div className="name-field">
-            <input name="name" onChange={(e) => onTextChange(e)} value={state.name} label="Name" />
+            <label for = "name">Name</label><br/>
+            <input name="name" onChange={(e) => onTextChange(e)} value={state.name} />
         </div>
-        <div>
+        <div className="message-field">
+        <label for = "message">Message</label><br/>
             <input
                 name="message"
                 onChange={(e) => onTextChange(e)}
                 value={state.message}
                 id="outlined-multiline-static"
-                variant="outlined"
-                label="Message"
+                
             />
         </div>
-        <button>Send Message</button>
+        <button id ="button">Send Message</button>
     </form>
     <div className="render-chat">
-				<h1>Chat Log</h1>
+				{/* <h4>Chat Log</h4> */}
 				{renderChat()}
 			</div>
     </div>

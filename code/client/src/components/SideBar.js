@@ -1,7 +1,8 @@
 import React from 'react';
 import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd'
+import ChatForm from './ChatForm';
 
-const SideBar = ({deck, startClick}) => {
+const SideBar = ({deck, startClick,  socket}) => {
 
     const handleClick = () => {
         startClick();
@@ -25,6 +26,9 @@ const SideBar = ({deck, startClick}) => {
                 <p>player 8</p>
 
             </div>
+            <div className="chat-form">
+          <ChatForm socket={socket} />
+        </div>
             <div className='button-container'>
                 <button className='start' onClick={handleClick}>Start Game</button> 
             </div>

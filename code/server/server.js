@@ -10,11 +10,11 @@ app.use(cors());
 app.use(express.json());
 
 // for chat box
-io.on ('connection', socket => {
-  socket.on('message',({name, message}) => {
-    io.emit('message', {name, message})
-  })
-})
+// io.on ('connection', socket => {
+//   socket.on('message',({name, message}) => {
+//     io.emit('message', {name, message})
+//   })
+// })
 // 
 
 const io = new Server(server, {
@@ -35,6 +35,9 @@ MongoClient.connect('mongodb://127.0.0.1:27017', { useUnifiedTopology: true })
 
 io.on('connection', socket => {
   console.log(`You connected with: ${socket.id}`)
+  socket.on('message',({name, message}) => {
+  io.emit('recieve-message', {name, message})
+  })
 });
 
 server.listen(5000, function () {

@@ -18,6 +18,8 @@ function GameContainer() {
   const [gameState, setGameState] = useState(false)
   const [playerHand, setPlayerHand] = useState([])
   const [deck, setDeck] = useState([])
+  // new chat state
+  const [chat, setChat] = useState ([])
 
   const [gridState, setGridState] = useState([
       [ {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}],
@@ -28,14 +30,17 @@ function GameContainer() {
       [ {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}], 
       [ {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}]    
   ])
+  const socket = io('http://localhost:5000')
 
   useEffect(()=>{
-    const socket = io('http://localhost:5000')
     socket.on('connect', ()=>console.log(socket.id))
+    socket.on("message", ({ name, message }) => {
+      setChat([ ...chat, { name, message } ])
+    })
     socket.on('connect_error', ()=>{
       setTimeout(()=>socket.connect(),5000)
     })
-  },[])
+  },[chat])
 
   useEffect (() => {
     getData()
@@ -52,6 +57,7 @@ function GameContainer() {
     placeStartCards()
     }
   }, [gameState])
+  
 
   const buildDeck = () => {
     const deck = []
@@ -150,16 +156,14 @@ function GameContainer() {
     return (
       <>
       
-      <div className="chat-form">
-          <ChatForm />
-        </div>
+     
       <div className= "game-container">
 
         <DragDropContext onDragEnd= {handleOnDragEnd}>
 
           <GameGrid  gridState={gridState}/>   
           <HandList cards={playerHand} reorderHand = {reorderHand} handleOnClickInvert = {handleOnClickInvert}/> 
-          <SideBar deck={deck} startClick={handleStartClick}/>
+          <SideBar deck={deck} startClick={handleStartClick} socket={socket} chat={chat}/>
 
         </DragDropContext>
         </div> 
