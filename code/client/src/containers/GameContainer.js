@@ -124,17 +124,17 @@ function GameContainer({playerNames, gameType, roomID}) {
     row = Number(row)
     col = Number(col)
     if (gridState[row - 1] !== undefined) {
-      gridState[row - 1][col] !== undefined ? neighbours.push(gridState[row - 1][col]) : neighbours.push(null)
+      gridState[row - 1][col] !== undefined ? neighbours.push(gridState[row - 1][col]) : neighbours.push({})
     } else {
-      neighbours.push(null)
+      neighbours.push({})
     }
-    gridState[row][col + 1] !== undefined ? neighbours.push(gridState[row][col + 1]) : neighbours.push(null)
+    gridState[row][col + 1] !== undefined ? neighbours.push(gridState[row][col + 1]) : neighbours.push({})
     if (gridState[row + 1] !== undefined) {
-      gridState[row + 1][col] !== undefined ? neighbours.push(gridState[row + 1][col]) : neighbours.push(null)
+      gridState[row + 1][col] !== undefined ? neighbours.push(gridState[row + 1][col]) : neighbours.push({})
     } else {
-      neighbours.push(null)
+      neighbours.push({})
     }
-    gridState[row][col- 1] !== undefined ? neighbours.push(gridState[row][col - 1]) : neighbours.push(null)
+    gridState[row][col- 1] !== undefined ? neighbours.push(gridState[row][col - 1]) : neighbours.push({})
     // [top, right, bottom, left]
     return neighbours
     }
