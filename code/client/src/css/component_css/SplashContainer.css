@@ -29,7 +29,7 @@ body, html{
     margin-top: 50px;
 }
 
-.single, .host, .join, .rules, input#player-name{
+.single, .host, .join, .rules, input#player-name, #room-name{
     background-color: transparent;
     color: white;
     margin: 10px;
@@ -39,7 +39,7 @@ body, html{
     font-size: 3.5vh;
     transition: 0.3s;
 }
-input#player-name::placeholder{
+input#player-name, #room-name::placeholder{
     color: rgba(238, 215, 12, 0.376);
     text-align: center;
 }

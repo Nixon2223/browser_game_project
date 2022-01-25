@@ -45,7 +45,7 @@ io.on('connection', socket => {
     io.emit('receive-hand', playerHand)
   })
   socket.on('join-room', room => {
-    io.join(room)
+    socket.join(room)
     console.log(`User with ID: ${socket.id} joined room: ${room}`);
   })
 });

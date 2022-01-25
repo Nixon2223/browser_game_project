@@ -31,11 +31,11 @@ function GameContainer({player, playerNames, gameType, roomID}) {
     transports: ["websocket", "polling"],
     rememberUpgrade: true,
     maxHttpBufferSize: 1e8,
-
   });
 
   useEffect(() => {
     socket.on('connect', ()=>console.log(socket.id))
+    socket.emit('join-room', roomID)
     socket.on('connect_error', ()=>{
       setTimeout(()=>socket.connect(),5000)
     })
