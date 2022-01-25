@@ -203,8 +203,12 @@ function GameContainer({playerNames, gameType, roomID}) {
 }
 
   const cardFitsNeighbours = (card, neighbours) => {
-    // if (card.inverted === 
-    const cardEntries = [card.entries.top, card.entries.right, card.entries.bottom, card.entries.left ]
+    let cardEntries = []
+    if (card.inverted){
+      cardEntries = [card.entries.bottom, card.entries.left, card.entries.top, card.entries.right]
+    } else {
+      cardEntries = [card.entries.top, card.entries.right, card.entries.bottom, card.entries.left ]
+    }
     let resultNeighboursEntries = neighboursEntries(neighbours)
 
     
@@ -229,6 +233,7 @@ function GameContainer({playerNames, gameType, roomID}) {
     for (let neighbour of gridNeighbours(gridRow, gridCol)){
       console.log(gridNeighbours(gridRow, gridCol))
       if (Object.keys(neighbour).length !== 0){
+        console.log(neighbour)
         if (neighbour["name:"].substring(0, 4) === "path" || neighbour["name:"].substring(0, 5) === "start") return true
       }
     }
