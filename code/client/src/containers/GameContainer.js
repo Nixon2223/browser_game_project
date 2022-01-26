@@ -317,6 +317,49 @@ function GameContainer({player, playerObjects, gameType, roomID}) {
     return results.includes(true)
   }
 
+
+  const checkFlipEndCard = (gridRow, gridCol) => {
+    let row = Number(gridRow)
+    let col = Number(gridCol)
+    let tempGrid = Object.assign({}, gridState)
+    let tempNeighbours = gridNeighbours(row, col)
+    console.log(tempNeighbours)
+
+      if (Object.keys(tempNeighbours[0]).length !== 0) {
+        if (tempNeighbours[0].name.substring(0, 4) === "coal" || tempNeighbours[0].name.substring(0, 4) === "gold"){
+          console.log(tempGrid[row + 1][col])
+          tempGrid[row + 1][col].flipped = false
+        }
+      }
+
+      if (Object.keys(tempNeighbours[1]).length !== 0) {
+        if (tempNeighbours[1].name.substring(0, 4) === "coal" || tempNeighbours[1].name.substring(0, 4) === "gold"){
+          console.log(tempGrid)
+          console.log(row)
+          console.log(col +1)
+          console.log(tempGrid[row][col + 1])
+          tempGrid[row][col + 1].flipped = false
+        }
+      }
+
+      if (Object.keys(tempNeighbours[2]).length !== 0) {
+        if (tempNeighbours[2].name.substring(0, 4) === "coal" || tempNeighbours[2].name.substring(0, 4) === "gold"){
+          console.log(tempGrid[row + 1][col])
+          tempGrid[row - 1][col].flipped = false
+        }
+      }
+
+      if (Object.keys(tempNeighbours[3]).length !== 0) {
+        if (tempNeighbours[3].name.substring(0, 4) === "coal" || tempNeighbours[3].name.substring(0, 4) === "gold"){
+          console.log(tempGrid[row + 1][col])
+          tempGrid[row][col - 1].flipped = false
+        }
+      }
+    
+    console.log(gridNeighbours(row, col))
+    setGridState(tempGrid)
+  }
+
   const legalMove = (cardSelected, gridRow, gridCol) => {
     // check that card being placed boarders a tile card
     if (!boarderTileCard(gridRow, gridCol)) return console.log("Cant be placed here!")
@@ -325,7 +368,11 @@ function GameContainer({player, playerObjects, gameType, roomID}) {
     // check if card is already placed in grid location
     if (Object.keys(gridState[gridRow][gridCol]).length !== 0) return console.log("Card already placed here!")
     // check if card fits in grid position with neighbours
-    else if (cardFitsNeighbours(cardSelected, gridNeighbours(gridRow, gridCol))) return true
+    else if (cardFitsNeighbours(cardSelected, gridNeighbours(gridRow, gridCol))){
+      // check for end card
+      checkFlipEndCard(gridRow, gridCol)
+      return true
+    } 
     else return false
   }
 
