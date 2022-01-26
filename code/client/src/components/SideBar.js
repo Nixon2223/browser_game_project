@@ -22,7 +22,7 @@ const SideBar = ({deck, chartDeck, backs, startClick, buttonToggle, players, soc
             <div className='player-container'>
                 {playerNodes}
             </div>
-            <div>
+            <div className='form-container'>
                 <Form socket={socket}/>
             </div>
             <div className='button-container'>
