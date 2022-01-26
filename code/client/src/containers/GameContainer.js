@@ -447,7 +447,7 @@ function GameContainer({player, playerObjects, gameType, roomID}) {
 
           <GameGrid  gridState={gridState}/>   
           <HandList player={player} cards={playerHand} reorderHand = {reorderHand} handleOnClickInvert = {handleOnClickInvert}/> 
-          <SideBar deck={deck} chartDeck={chartDeck} backs={data.cards.card_backs} startClick={buttonToggle ? handleEndClick : handleStartClick} buttonToggle={buttonToggle} players={players}/>
+          <SideBar deck={deck} socket={socket} chartDeck={chartDeck} backs={data.cards.card_backs} startClick={buttonToggle ? handleEndClick : handleStartClick} buttonToggle={buttonToggle} players={players}/>
 
         </DragDropContext>
         
