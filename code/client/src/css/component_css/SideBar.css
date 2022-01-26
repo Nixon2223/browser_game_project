@@ -73,7 +73,7 @@ button.start {
 }
 
 /* Css for chat form */
- /* .App {
+ .App {
     width: 75%;
     height: 75%;
     background: #fff;
@@ -81,7 +81,7 @@ button.start {
     font-family: "Open Sans", sans-serif;
     display: grid;
     place-items: center;
-  }  */
+  } 
    
   @import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,700");
 
@@ -146,18 +146,15 @@ button.start {
     overflow-x: hidden;
   }
 
-  /* Additional */
-
+  
+ 
   .chat-window .chat-body .message-container::-webkit-scrollbar {
     display: none;
   }
    .chat-window .chat-body .message {
     height: auto;
-    /* display: flex; */
-  } 
-
-  
-  
+    display: flex;
+   }
   #you {
     justify-content: flex-start;
   }
@@ -220,7 +217,7 @@ button.start {
     place-items: center;
     cursor: pointer;
     flex: 15%;
-    /* height: 50%; */
+    height: 50%; 
     background: transparent;
     outline: none;
     font-size: 25px;
@@ -253,4 +250,4 @@ button.start {
   
   
   
-  
+    

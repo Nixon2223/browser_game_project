@@ -1,5 +1,7 @@
 import { useState } from "react";
 import Chat from "./Chat";
+
+
 function Form({socket}) {
   const [username, setUsername] = useState("");
   const [room, setRoom] = useState("");
@@ -14,7 +16,7 @@ function Form({socket}) {
     <div className="App">
       {!showChat ? (
         <div className="joinChatContainer">
-          {/* <h3>Join A Chat</h3> */}
+          <h3>Join A Chat</h3>
           <input
             type="text"
             placeholder="name..."
